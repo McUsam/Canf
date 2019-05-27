@@ -64,7 +64,6 @@ public final class Llibre extends Article {
 	}
 
 	public String toXml() {
-		//https://codebeautify.org/xmlvalidator
 
 		String txtXml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
 		txtXml = txtXml + (char) 10 + (char) 13;
