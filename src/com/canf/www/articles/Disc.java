@@ -73,6 +73,18 @@ public final class Disc extends Article {
 			throw new ValidacionException("No pot ser null o una cadena buida.");
 	}
 
+	public String toXml() {
+		//https://codebeautify.org/xmlvalidator
+
+		String txtXml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+		txtXml = txtXml + (char) 10 + (char) 13;
+		txtXml = txtXml + "<Disc ";
+		txtXml = txtXml + "interpret=\"" + interpret + "\" ";
+		txtXml = txtXml + "llistaCansons=\"" + llistaCansons + "\" ";
+		txtXml = txtXml + "discografia=\"" + discografia + "\" ";
+		return txtXml;
+	}
+	
 	@Override
 	public String toString() {
 		return "Disc [interpret=" + interpret + ", llistaCansons=" + llistaCansons + ", discografia=" + discografia
