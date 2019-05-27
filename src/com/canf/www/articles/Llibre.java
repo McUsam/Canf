@@ -63,6 +63,19 @@ public final class Llibre extends Article {
 			throw new ValidacionException("El numero de pagines no pot ser 0 o negatiu");
 	}
 
+	public String toXml() {
+		//https://codebeautify.org/xmlvalidator
+
+		String txtXml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+		txtXml = txtXml + (char) 10 + (char) 13;
+		txtXml = txtXml + "<llibre ";
+		txtXml = txtXml + "autor=\"" + autor + "\" ";
+		txtXml = txtXml + "editor=\"" + editor + "\" ";
+		txtXml = txtXml + "numPagines=\"" + numPagines + "\" ";
+		txtXml = txtXml + "isbn=\"" + isbn	+ "\" ";
+		return txtXml;
+	}
+	
 	@Override
 	public String toString() {
 		return "Llibre [autor=" + autor + ", editor=" + editor + ", numPagines=" + numPagines + ", isbn=" + isbn + "]";
