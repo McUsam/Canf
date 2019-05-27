@@ -32,6 +32,17 @@ public final class Pelicula extends Article {
 		else
 			throw new ValidacionException("No pot ser null o una cadena buida.");
 	}
+	
+	public String toXml() {
+		
+		String txtXml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+		txtXml = txtXml + (char) 10 + (char) 13;
+		txtXml = txtXml + "<Disc ";
+		txtXml = txtXml + "director=\"" + director + "\" ";
+		txtXml = txtXml + "llistaActorsPelicula=\"" + llistaActorsPelicula + "\" ";
+		txtXml = txtXml + "sinopsis=\"" + sinopsis + "\" ";
+		return txtXml;
+	}
 
 	@Override
 	public String toString() {
