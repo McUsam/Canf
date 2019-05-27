@@ -79,17 +79,29 @@ public abstract class Article {
     	if (Validacions.validaDouble(preu))
 			this.preu = preu;
 		else
-			throw new ValidacionException("No pot ser negatiu ni més petit que 0.");
+			throw new ValidacionException("No pot ser negatiu ni mÃ©s petit que 0.");
     }
 
     public void setStock(int stock) throws ValidacionException {
     	if (Validacions.validaInt(stock))
 			this.stock = stock;
 		else
-			throw new ValidacionException("No pot ser negatiu ni més petit que 0.");
+			throw new ValidacionException("No pot ser negatiu ni mÃ©s petit que 0.");
     }
 
-
+public String toXml() {
+    	String txtXml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+    	txtXml = txtXml + (char) 10 + (char) 13;
+		txtXml = txtXml + "<Article>";
+		txtXml = txtXml + "referencia=\"" + referencia + "\" ";
+		txtXml = txtXml + "nom=\"" + nom + "\" ";
+		txtXml = txtXml + "descripcio=\"" + descripcio + "\" ";
+		txtXml = txtXml + "preu=\"" + preu	+ "\" ";
+		txtXml = txtXml + "tipusArticle=\"" + tipusArticle + "\" ";
+		txtXml = txtXml + "stock=\"" + stock + "\">";
+		txtXml = txtXml + "</Article>";
+    	return txtXml;
+	}
 
 	@Override
 	public String toString() {
