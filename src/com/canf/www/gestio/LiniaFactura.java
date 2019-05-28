@@ -13,7 +13,7 @@ public class LiniaFactura {
 	public LiniaFactura(Article article, int quantitat) throws ValidacionException, QuantitatNoDisponibleException {
 		super();
 		this.article = article;
-		setPreu(preu);
+		setPreu(article.getPreu());
 		setQuantitat(quantitat);
 
 	}
