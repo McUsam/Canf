@@ -66,21 +66,27 @@ public class Magatzem {
 		
 	}
 	
-	public ArrayList<Article> llistaArticle(TipusArticle tipusArticle){
-		
-		ArrayList<Article> llistaCompleta = (ArrayList<Article>) this.llistaArticles.values();
-		ArrayList<Article> llistaPerTipus = new ArrayList();
-		for(Article article : llistaCompleta){
-			
-			if(article.getTipusArticle() == tipusArticle){
-				llistaPerTipus.add(article);
-			}
-			
+	public ArrayList<String> llistaArticle(TipusArticle tipusArticle, TipusExtensio a) {
+		ArrayList<String> llista = new ArrayList<String>();
+		for (Entry<Integer, Article> entry:  llistaArticles.entrySet()) {
+		    if(entry.getValue().getTipusArticle().equals(tipusArticle)) {
+		    	llista.add(entry.getValue().toXML(a));
+		    }
 		}
-		
-		return llistaPerTipus;
-	
-		
+		if (tipusArticle.equals(TipusArticle.DISC)) {
+			String txtXml = "";
+			txtXml = txtXml + "<LlistaDiscs>" + "\n";
+			txtXml = txtXml + "<LlistaDiscs>" + "\n";
+		} else if (tipusArticle.equals(TipusArticle.LLIBRE)) {
+			String txtXml = "";
+			txtXml = txtXml + "<LlistaLlibres>" + "\n";
+			txtXml = txtXml + "<LlistaLlibres>" + "\n";
+		} else {
+			String txtXml = "";
+			txtXml = txtXml + "<LlistaPelicules>" + "\n";
+			txtXml = txtXml + "<LlistaPelicules>" + "\n";
+		}
+		return llista;
 	}
 	
 	
