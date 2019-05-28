@@ -83,18 +83,25 @@ public abstract class Article {
 			throw new ValidacionException("No pot ser negatiu ni més petit que 0.");
     }
 
-public String toXml(TipusExtensio a) {
-	
-    	txtXml = txtXml + (char) 10 + (char) 13;
-		txtXml = txtXml + "<Article>";
-		txtXml = txtXml + "<referencia>" + referencia + "</referencia> ";
-		txtXml = txtXml + "<nom>" + nom + "</nom>";
-		txtXml = txtXml + "<descripcio>" + descripcio + "</descripcio>";
-		txtXml = txtXml + "<preu>" + preu	+ "</preu>";
-		txtXml = txtXml + "<tipusArticle>" + tipusArticle + "</tipusArticle>";
-		txtXml = txtXml + "<stock>" + stock + "</stock>";
-		txtXml = txtXml + "</Article>";
-    	return txtXml;
+public String toXML(TipusExtensio x) {
+		String txtXml = "";
+		if (x == TipusExtensio.EXTENS) {
+			txtXml = txtXml + "<Article>" + "\n";
+			txtXml = txtXml + "<referencia>" + referencia + "</referencia> " + "\n";
+			txtXml = txtXml + "<nom>" + nom + "</nom>" + "\n";
+			txtXml = txtXml + "<descripcio>" + descripcio + "</descripcio>" + "\n";
+			txtXml = txtXml + "<preu>" + preu + "</preu>" + "\n";
+			txtXml = txtXml + "<tipusArticle>" + tipusArticle + "</tipusArticle>" + "\n";
+			txtXml = txtXml + "<stock>" + stock + "</stock>" + "\n";
+			txtXml = txtXml + "</Article>";
+		} else {
+			txtXml = txtXml + "<Article>" + "\n";
+			txtXml = txtXml + "<referencia>" + referencia + "</referencia> " + "\n";
+			txtXml = txtXml + "<nom>" + nom + "</nom>" + "\n";
+			txtXml = txtXml + "<descripcio>" + descripcio + "</descripcio>" + "\n";
+			txtXml = txtXml + "</Article>";
+		}
+		return txtXml;
 	}
 
 	@Override
