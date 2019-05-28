@@ -36,23 +36,23 @@ public final class Pelicula extends Article {
 	public String toXML(TipusExtensio x) {
 		String txtXml = "";
 		if (x == TipusExtensio.EXTENS) {
-			txtXml = txtXml + "<Article>" + "\n";
+			txtXml = txtXml + "<Pelicula>" + "\n";
 			txtXml = txtXml + "<referencia>" + getReferencia() + "</referencia> " + "\n";
 			txtXml = txtXml + "<nom>" + getNom() + "</nom>" + "\n";
 			txtXml = txtXml + "<descripcio>" + getDescripcio() + "</descripcio>" + "\n";
 			txtXml = txtXml + "<preu>" + getPreu() + "</preu>" + "\n";
 			txtXml = txtXml + "<tipusArticle>" + getTipusArticle() + "</tipusArticle>" + "\n";
 			txtXml = txtXml + "<stock>" + getStock() + "</stock>" + "\n";
-			txtXml = txtXml + "director=\"" + director + "\" ";
-			txtXml = txtXml + "llistaActorsPelicula=\"" + llistaActorsPelicula + "\" ";
-			txtXml = txtXml + "sinopsis=\"" + sinopsis + "\" ";
-			txtXml = txtXml + "</Article>";
+			txtXml = txtXml + "<director>" + director + "</director>" + "\n";
+			txtXml = txtXml + "<llistaActorsPelicula>" + llistaActorsPelicula + "</llistaActorsPelicula>" + "\n";
+			txtXml = txtXml + "<sinopsis>" + sinopsis +  "</sinopsis>" + "\n";
+			txtXml = txtXml + "</Pelicula>";
 		} else {
-			txtXml = txtXml + "<Article>" + "\n";
+			txtXml = txtXml + "<Pelicula>" + "\n";
 			txtXml = txtXml + "<referencia>" + getReferencia() + "</referencia> " + "\n";
 			txtXml = txtXml + "<nom>" + getNom() + "</nom>" + "\n";
 			txtXml = txtXml + "<descripcio>" + getDescripcio() + "</descripcio>" + "\n";
-			txtXml = txtXml + "</Article>";
+			txtXml = txtXml + "</Pelicula>";
 		}
 		return txtXml;
 	}
