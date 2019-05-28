@@ -2,6 +2,7 @@ package com.canf.www.gestio;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import com.canf.www.articles.Article;
 import com.canf.www.articles.TipusArticle;
@@ -17,6 +18,8 @@ public class Magatzem {
 	//Constructor
 	public Magatzem(String direccio) {
 		this.direccio = direccio;
+		this.historial = new ArrayList<Venta>();
+		this.llistaArticles = new HashMap<Integer, Article>();
 	}
 	///////////////////////////////////////////
 	
@@ -66,11 +69,12 @@ public class Magatzem {
 		
 	}
 	
-	public ArrayList<String> llistaArticle(TipusArticle tipusArticle, TipusExtensio a) {
+	public ArrayList<String> llistaArticle(TipusArticle tipusArticle, TipusExtensio tipusExtensio) {
 		ArrayList<String> llista = new ArrayList<String>();
-		for (Entry<Integer, Article> entry:  llistaArticles.entrySet()) {
+		
+		for (Map.Entry<Integer, Article> entry:  llistaArticles.entrySet()) {
 		    if(entry.getValue().getTipusArticle().equals(tipusArticle)) {
-		    	llista.add(entry.getValue().toXML(a));
+		    	llista.add(entry.getValue().toXML(tipusExtensio));
 		    }
 		}
 		if (tipusArticle.equals(TipusArticle.DISC)) {
@@ -91,12 +95,35 @@ public class Magatzem {
 	
 	
 
-	public ArrayList<String> tornaLlista(TipusExtensio tipusExtensio){}
+	public ArrayList<String> tornaLlista(TipusExtensio tipusExtensio){
+		
+		ArrayList<String> llista = new ArrayList<String>();
+		
+		for (Map.Entry<Integer, Article> entry:  llistaArticles.entrySet()) {
+			
+		    	llista.add(entry.getValue().toXML(tipusExtensio));
+		    	
+		}
+		return llista;
+	}
 	
-	public ArrayList<Article> cercaArticle(TipusArticle tipusArticle){}
+	public Article cercaArticle(Integer referencia){
+		
+		if(this.llistaArticles.containsKey(referencia)) {
+			return this.llistaArticles.get(referencia);
+			
+		}
+		return null;
+		
+	}
 	
 	/* Metodos del historial*/
 	public void afegeixVenta(Venta venta){}
+	
+	public boolean afegeixStock(){}
+	
+	public boolean restaStock() {}
+	
 	public ArrayList<Venta> llistaVenta(){
 		
 		
