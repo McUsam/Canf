@@ -66,24 +66,24 @@ public final class Llibre extends Article {
 	public String toXML(TipusExtensio x) {
 		String txtXml = "";
 		if (x == TipusExtensio.EXTENS) {
-			txtXml = txtXml + "<Article>" + "\n";
+			txtXml = txtXml + "<Llibre>" + "\n";
 			txtXml = txtXml + "<referencia>" + getReferencia() + "</referencia> " + "\n";
 			txtXml = txtXml + "<nom>" + getNom() + "</nom>" + "\n";
 			txtXml = txtXml + "<descripcio>" + getDescripcio() + "</descripcio>" + "\n";
 			txtXml = txtXml + "<preu>" + getPreu() + "</preu>" + "\n";
 			txtXml = txtXml + "<tipusArticle>" + getTipusArticle() + "</tipusArticle>" + "\n";
 			txtXml = txtXml + "<stock>" + getStock() + "</stock>" + "\n";
-			txtXml = txtXml + "autor=\"" + autor + "\" ";
-			txtXml = txtXml + "editor=\"" + editor + "\" ";
-			txtXml = txtXml + "numPagines=\"" + numPagines + "\" ";
-			txtXml = txtXml + "isbn=\"" + isbn	+ "\" ";
-			txtXml = txtXml + "</Article>";
+			txtXml = txtXml + "<autor>" + autor + "</autor>" + "\n";
+			txtXml = txtXml + "<editor>" + editor +"</editor>" + "\n";
+			txtXml = txtXml + "<numPagines>" + numPagines + "</numPagines>" + "\n";
+			txtXml = txtXml + "<isbn>" + isbn	+ "</isbn>" + "\n";
+			txtXml = txtXml + "</Llibre>";
 		} else {
-			txtXml = txtXml + "<Article>" + "\n";
+			txtXml = txtXml + "<Llibre>" + "\n";
 			txtXml = txtXml + "<referencia>" + getReferencia() + "</referencia> " + "\n";
 			txtXml = txtXml + "<nom>" + getNom() + "</nom>" + "\n";
 			txtXml = txtXml + "<descripcio>" + getDescripcio() + "</descripcio>" + "\n";
-			txtXml = txtXml + "</Article>";
+			txtXml = txtXml + "</Llibre>";
 		}
 		return txtXml;
 	}
