@@ -22,12 +22,6 @@ public abstract class Article {
         this.tipusArticle = tipusArticle;
         setStock(stock);
     }
-
-    
-    
-    public void toXML(String x){
-        
-    }
     
     public void setNom(String nom) throws ValidacionException {
     	if (Validacions.validaString(nom))
@@ -89,16 +83,16 @@ public abstract class Article {
 			throw new ValidacionException("No pot ser negatiu ni més petit que 0.");
     }
 
-public String toXml() {
-    	String txtXml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+public String toXml(TipusExtensio a) {
+	
     	txtXml = txtXml + (char) 10 + (char) 13;
 		txtXml = txtXml + "<Article>";
-		txtXml = txtXml + "referencia=\"" + referencia + "\" ";
-		txtXml = txtXml + "nom=\"" + nom + "\" ";
-		txtXml = txtXml + "descripcio=\"" + descripcio + "\" ";
-		txtXml = txtXml + "preu=\"" + preu	+ "\" ";
-		txtXml = txtXml + "tipusArticle=\"" + tipusArticle + "\" ";
-		txtXml = txtXml + "stock=\"" + stock + "\">";
+		txtXml = txtXml + "<referencia>" + referencia + "</referencia> ";
+		txtXml = txtXml + "<nom>" + nom + "</nom>";
+		txtXml = txtXml + "<descripcio>" + descripcio + "</descripcio>";
+		txtXml = txtXml + "<preu>" + preu	+ "</preu>";
+		txtXml = txtXml + "<tipusArticle>" + tipusArticle + "</tipusArticle>";
+		txtXml = txtXml + "<stock>" + stock + "</stock>";
 		txtXml = txtXml + "</Article>";
     	return txtXml;
 	}
