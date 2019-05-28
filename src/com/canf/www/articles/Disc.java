@@ -81,7 +81,7 @@ public final class Disc extends Article {
 	public String toXML(TipusExtensio x) {
 		String txtXml = "";
 		if (x == TipusExtensio.EXTENS) {
-			txtXml = txtXml + "<Article>" + "\n";
+			txtXml = txtXml + "<Disc>" + "\n";
 			txtXml = txtXml + "<referencia>" + getReferencia() + "</referencia> " + "\n";
 			txtXml = txtXml + "<nom>" + getNom() + "</nom>" + "\n";
 			txtXml = txtXml + "<descripcio>" + getDescripcio() + "</descripcio>" + "\n";
@@ -89,24 +89,22 @@ public final class Disc extends Article {
 			txtXml = txtXml + "<tipusArticle>" + getTipusArticle() + "</tipusArticle>" + "\n";
 			txtXml = txtXml + "<stock>" + getStock() + "</stock>" + "\n";
 			txtXml = txtXml + "<interpret>" + interpret + "</interpret> " + "\n";
-			txtXml = txtXml + "llistaCansons=\"" + llistaCansons + "</llistaCansons> " + "\n";
-			txtXml = txtXml + "discografia=\"" + discografia + "</discografia> " + "\n";
-			txtXml = txtXml + "</Article>";
+			txtXml = txtXml + "llistaCansons" + llistaCansons + "</llistaCansons> " + "\n";
+			txtXml = txtXml + "discografia" + discografia + "</discografia> " + "\n";
+			txtXml = txtXml + "</Disc>";
 		} else {
-			txtXml = txtXml + "<Article>" + "\n";
+			txtXml = txtXml + "<Disc>" + "\n";
 			txtXml = txtXml + "<referencia>" + getReferencia() + "</referencia> " + "\n";
 			txtXml = txtXml + "<nom>" + getNom() + "</nom>" + "\n";
 			txtXml = txtXml + "<descripcio>" + getDescripcio() + "</descripcio>" + "\n";
-			txtXml = txtXml + "</Article>";
+			txtXml = txtXml + "</Disc>";
 		}
-		return txtXml;
+	return txtXml;
+		
 	}	
 	@Override
 	public String toString() {
 		return "Disc [interpret=" + interpret + ", llistaCansons=" + llistaCansons + ", discografia=" + discografia
 				+ "]";
 	}
-
-	
-
 }
