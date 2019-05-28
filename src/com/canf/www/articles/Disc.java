@@ -1,5 +1,7 @@
 package com.canf.www.articles;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 
 import com.canf.www.errors.ValidacionException;
@@ -8,31 +10,33 @@ import com.canf.www.validacions.Validacions;
 public final class Disc extends Article {
 
 	private String interpret;
-	private HashSet<String> llistaCansons;
+	private ArrayList<String> llistaCansons;
 	private String discografia;
 
 	
 
-	public Disc(String interpret, HashSet<String> llistaCansons, String discografia, String nom, String descripcio, double preu, int stock) throws ValidacionException {
+	public Disc(String interpret, ArrayList<String> llistaCansons, String discografia, String nom, String descripcio, double preu, int stock) throws ValidacionException {
         super(nom, descripcio, preu, TipusArticle.DISC, stock);
         setInterpret(interpret);
        this.llistaCansons = llistaCansons;
+       Collections.sort(this.llistaCansons);
        setDiscografia(discografia);
     }
 
-	public Disc(String interpret, String discografia, String nom, String descripcio, double preu,
-			TipusArticle tipusArticle, int stock) throws ValidacionException {
-		super(nom, descripcio, preu, tipusArticle, stock);
-		this.interpret = interpret;
-		this.llistaCansons = new HashSet<>();
-		this.discografia = discografia;
+	public Disc(String interpret, String discografia, String nom, String descripcio, double preu, int stock) throws ValidacionException {
+		super(nom, descripcio, preu, TipusArticle.DISC, stock);
+		setInterpret(interpret);
+		this.llistaCansons = new ArrayList<>();
+		setDiscografia(discografia);
 	}
 
 	public boolean afegirCanso(String nomCanso) {
+		Collections.sort(this.llistaCansons);
 		return llistaCansons.add(nomCanso);
 	}
 
 	public boolean esborraCanso(String nomCanso) {
+		Collections.sort(this.llistaCansons);
 		return llistaCansons.remove(nomCanso);
 	}
 
@@ -51,7 +55,8 @@ public final class Disc extends Article {
 		return interpret;
 	}
 
-	public HashSet<String> getLlistaCansons() {
+	public ArrayList<String> getLlistaCansons() {
+		Collections.sort(this.llistaCansons);
 		return llistaCansons;
 	}
 
@@ -73,17 +78,6 @@ public final class Disc extends Article {
 			throw new ValidacionException("No pot ser null o una cadena buida.");
 	}
 
-	public String toXml() {
-
-		String txtXml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
-		txtXml = txtXml + (char) 10 + (char) 13;
-		txtXml = txtXml + "<Disc ";
-		txtXml = txtXml + "interpret=\"" + interpret + "\" ";
-		txtXml = txtXml + "llistaCansons=\"" + llistaCansons + "\" ";
-		txtXml = txtXml + "discografia=\"" + discografia + "\" ";
-		return txtXml;
-	}
-	
 	@Override
 	public String toString() {
 		return "Disc [interpret=" + interpret + ", llistaCansons=" + llistaCansons + ", discografia=" + discografia
