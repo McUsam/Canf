@@ -78,6 +78,29 @@ public final class Disc extends Article {
 			throw new ValidacionException("No pot ser null o una cadena buida.");
 	}
 
+	public String toXML(TipusExtensio x) {
+		String txtXml = "";
+		if (x == TipusExtensio.EXTENS) {
+			txtXml = txtXml + "<Article>" + "\n";
+			txtXml = txtXml + "<referencia>" + getReferencia() + "</referencia> " + "\n";
+			txtXml = txtXml + "<nom>" + getNom() + "</nom>" + "\n";
+			txtXml = txtXml + "<descripcio>" + getDescripcio() + "</descripcio>" + "\n";
+			txtXml = txtXml + "<preu>" + getPreu() + "</preu>" + "\n";
+			txtXml = txtXml + "<tipusArticle>" + getTipusArticle() + "</tipusArticle>" + "\n";
+			txtXml = txtXml + "<stock>" + getStock() + "</stock>" + "\n";
+			txtXml = txtXml + "<interpret>" + interpret + "</interpret> " + "\n";
+			txtXml = txtXml + "llistaCansons=\"" + llistaCansons + "</llistaCansons> " + "\n";
+			txtXml = txtXml + "discografia=\"" + discografia + "</discografia> " + "\n";
+			txtXml = txtXml + "</Article>";
+		} else {
+			txtXml = txtXml + "<Article>" + "\n";
+			txtXml = txtXml + "<referencia>" + getReferencia() + "</referencia> " + "\n";
+			txtXml = txtXml + "<nom>" + getNom() + "</nom>" + "\n";
+			txtXml = txtXml + "<descripcio>" + getDescripcio() + "</descripcio>" + "\n";
+			txtXml = txtXml + "</Article>";
+		}
+		return txtXml;
+	}	
 	@Override
 	public String toString() {
 		return "Disc [interpret=" + interpret + ", llistaCansons=" + llistaCansons + ", discografia=" + discografia
