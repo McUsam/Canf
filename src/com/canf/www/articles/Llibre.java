@@ -62,16 +62,29 @@ public final class Llibre extends Article {
 		else
 			throw new ValidacionException("El numero de pagines no pot ser 0 o negatiu");
 	}
-
-	public String toXml() {
-
-		String txtXml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
-		txtXml = txtXml + (char) 10 + (char) 13;
-		txtXml = txtXml + "<llibre ";
-		txtXml = txtXml + "autor=\"" + autor + "\" ";
-		txtXml = txtXml + "editor=\"" + editor + "\" ";
-		txtXml = txtXml + "numPagines=\"" + numPagines + "\" ";
-		txtXml = txtXml + "isbn=\"" + isbn	+ "\" ";
+	
+	public String toXML(TipusExtensio x) {
+		String txtXml = "";
+		if (x == TipusExtensio.EXTENS) {
+			txtXml = txtXml + "<Article>" + "\n";
+			txtXml = txtXml + "<referencia>" + getReferencia() + "</referencia> " + "\n";
+			txtXml = txtXml + "<nom>" + getNom() + "</nom>" + "\n";
+			txtXml = txtXml + "<descripcio>" + getDescripcio() + "</descripcio>" + "\n";
+			txtXml = txtXml + "<preu>" + getPreu() + "</preu>" + "\n";
+			txtXml = txtXml + "<tipusArticle>" + getTipusArticle() + "</tipusArticle>" + "\n";
+			txtXml = txtXml + "<stock>" + getStock() + "</stock>" + "\n";
+			txtXml = txtXml + "autor=\"" + autor + "\" ";
+			txtXml = txtXml + "editor=\"" + editor + "\" ";
+			txtXml = txtXml + "numPagines=\"" + numPagines + "\" ";
+			txtXml = txtXml + "isbn=\"" + isbn	+ "\" ";
+			txtXml = txtXml + "</Article>";
+		} else {
+			txtXml = txtXml + "<Article>" + "\n";
+			txtXml = txtXml + "<referencia>" + getReferencia() + "</referencia> " + "\n";
+			txtXml = txtXml + "<nom>" + getNom() + "</nom>" + "\n";
+			txtXml = txtXml + "<descripcio>" + getDescripcio() + "</descripcio>" + "\n";
+			txtXml = txtXml + "</Article>";
+		}
 		return txtXml;
 	}
 	
@@ -79,7 +92,4 @@ public final class Llibre extends Article {
 	public String toString() {
 		return "Llibre [autor=" + autor + ", editor=" + editor + ", numPagines=" + numPagines + ", isbn=" + isbn + "]";
 	}
-
-	
-
 }
