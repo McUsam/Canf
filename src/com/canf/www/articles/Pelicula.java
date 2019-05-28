@@ -33,14 +33,27 @@ public final class Pelicula extends Article {
 			throw new ValidacionException("No pot ser null o una cadena buida.");
 	}
 	
-	public String toXml() {
-		
-		String txtXml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
-		txtXml = txtXml + (char) 10 + (char) 13;
-		txtXml = txtXml + "<Disc ";
-		txtXml = txtXml + "director=\"" + director + "\" ";
-		txtXml = txtXml + "llistaActorsPelicula=\"" + llistaActorsPelicula + "\" ";
-		txtXml = txtXml + "sinopsis=\"" + sinopsis + "\" ";
+	public String toXML(TipusExtensio x) {
+		String txtXml = "";
+		if (x == TipusExtensio.EXTENS) {
+			txtXml = txtXml + "<Article>" + "\n";
+			txtXml = txtXml + "<referencia>" + getReferencia() + "</referencia> " + "\n";
+			txtXml = txtXml + "<nom>" + getNom() + "</nom>" + "\n";
+			txtXml = txtXml + "<descripcio>" + getDescripcio() + "</descripcio>" + "\n";
+			txtXml = txtXml + "<preu>" + getPreu() + "</preu>" + "\n";
+			txtXml = txtXml + "<tipusArticle>" + getTipusArticle() + "</tipusArticle>" + "\n";
+			txtXml = txtXml + "<stock>" + getStock() + "</stock>" + "\n";
+			txtXml = txtXml + "director=\"" + director + "\" ";
+			txtXml = txtXml + "llistaActorsPelicula=\"" + llistaActorsPelicula + "\" ";
+			txtXml = txtXml + "sinopsis=\"" + sinopsis + "\" ";
+			txtXml = txtXml + "</Article>";
+		} else {
+			txtXml = txtXml + "<Article>" + "\n";
+			txtXml = txtXml + "<referencia>" + getReferencia() + "</referencia> " + "\n";
+			txtXml = txtXml + "<nom>" + getNom() + "</nom>" + "\n";
+			txtXml = txtXml + "<descripcio>" + getDescripcio() + "</descripcio>" + "\n";
+			txtXml = txtXml + "</Article>";
+		}
 		return txtXml;
 	}
 
