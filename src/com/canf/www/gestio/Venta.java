@@ -11,18 +11,19 @@ import com.canf.www.errors.ValidacionException;
 
 public class Venta {
 	private static final AtomicInteger count = new AtomicInteger(0);
-	private HashMap<Integer,LiniaFactura> factura;
+	private HashMap<Integer, LiniaFactura> factura;
 	private String client;
 	private LocalDate data;
-	
+
 	public Venta(String client) {
 		super();
+		this.factura = new HashMap<Integer, LiniaFactura>();
 		this.client = client;
 	}
 
-	public Venta(HashMap<Integer,LiniaFactura> factura, String client) {
+	public Venta(HashMap<Integer, LiniaFactura> factura, String client) {
 		super();
-		this.factura = new HashMap<Integer,LiniaFactura>();
+		this.factura = factura;
 		this.client = client;
 	}
 
@@ -33,26 +34,33 @@ public class Venta {
 	public LocalDate getData() {
 		return data;
 	}
-	public void afegeixArticle(LiniaFactura a) {
-		if( !factura.containsValue(a))
-			factura.put(count.getAndIncrement(),a);
+
+	public boolean afegeixArticle(LiniaFactura a) {
+		if (factura.containsValue(a)) {
+			return false;
+		} else {
+			factura.put(count.getAndIncrement(), a);
+			return true;
+		}
 	}
+
 	public double esborraArticle(LiniaFactura a) throws ValidacionException {
 		double b = factura.get(a).getPreu() * factura.get(a).getQuantitat();
-		factura.get(a).getArticle().setStock(factura.get(a).getArticle().getStock()+factura.get(a).getQuantitat());
+		factura.get(a).getArticle().setStock(factura.get(a).getArticle().getStock() + factura.get(a).getQuantitat());
 		factura.remove(a);
 		return b;
 	}
 
-	public HashMap<Integer,LiniaFactura> llista(){
+	public HashMap<Integer, LiniaFactura> llista() {
 		return factura;
 	}
+
 	public double calculaTotal() {
 		double a = 0;
-		for(int i =0; i<factura.size();i++) {
-			a = a + factura.get(i).getPreu() * factura.get(i).getQuantitat() ;
+		for (int i = 0; i < factura.size(); i++) {
+			a = a + factura.get(i).getPreu() * factura.get(i).getQuantitat();
 		}
 		return a;
 	}
-	
+
 }
