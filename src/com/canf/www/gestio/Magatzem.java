@@ -15,14 +15,15 @@ public class Magatzem {
 	private ArrayList<Venta> historial;
 	private String direccio;
 
-	
+
 	public Magatzem(String direccio) {
 		System.out.println("hola");
 		this.direccio = direccio;
 		this.historial = new ArrayList<Venta>();
 		this.llistaArticles = new HashMap<Integer, Article>();
 	}
-	
+
+
 
 	public String getDireccio() {
 		return direccio;
@@ -43,7 +44,7 @@ public class Magatzem {
 
 	}
 
-	public boolean elmininarArticle(String idArticle) {
+	public boolean eliminarArticle(String idArticle) {
 
 		if (this.llistaArticles.containsKey(idArticle)) {
 			this.llistaArticles.remove(idArticle);
@@ -109,7 +110,7 @@ public class Magatzem {
 
 	}
 
-
+	
 	public void afegeixVenta(Venta venta) {
 		this.historial.add(venta);
 	}
@@ -118,9 +119,33 @@ public class Magatzem {
 
 	// public boolean restaStock() {}
 
-	
+	public ArrayList<String> llistaVenta() {
+
+		ArrayList<String> llista = new ArrayList<String>();
+
+		String txtXml = "";
+
+		for (Venta venta : this.historial) {
+
+			txtXml = txtXml + "<venta>" + "\n";
+			for (Map.Entry<Integer, LiniaFactura> entry : venta.llista().entrySet()) {
+				txtXml = txtXml + "<LiniaFactura>" + "\n";
+				txtXml = entry.getValue().getArticle().toXML(TipusExtensio.SENZILL);
+				txtXml = "<Preu>" + entry.getValue().getPreu() + "</preu>" + "\n";
+				txtXml = "<Quantitat>" + entry.getValue().getQuantitat() + "</Quantitat>" + "\n";
+				txtXml = txtXml + "</LiniaFactura>" + "\n";
+
+			}
+			txtXml = txtXml + "</venta>" + "\n";
+			llista.add(new String(txtXml));
+			txtXml = "";
+
+		}
+
+		return llista;
+
+	}
+
 }
 
-///////////////////////////////////////////
 
-/* falta metodo actualizar stock con parametros referencia String y integer */
