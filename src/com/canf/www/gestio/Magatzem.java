@@ -10,21 +10,20 @@ import com.canf.www.articles.TipusExtensio;
 
 public class Magatzem {
 
+	
 	private HashMap<Integer, Article> llistaArticles;
 	private ArrayList<Venta> historial;
 	private String direccio;
+
 	
-	
-	//Constructor
 	public Magatzem(String direccio) {
+		System.out.println("hola");
 		this.direccio = direccio;
 		this.historial = new ArrayList<Venta>();
 		this.llistaArticles = new HashMap<Integer, Article>();
 	}
-	///////////////////////////////////////////
 	
-	//Setters & Getters
-	
+
 	public String getDireccio() {
 		return direccio;
 	}
@@ -33,104 +32,95 @@ public class Magatzem {
 		this.direccio = direccio;
 	}
 
-	///////////////////////////////////////////
-	
-	
-	//Metodos
-	public boolean afegeixArticle(Article article){
-	
-		if(!this.llistaArticles.containsKey(article.getReferencia())) {
+
+	public boolean afegeixArticle(Article article) {
+
+		if (!this.llistaArticles.containsKey(article.getReferencia())) {
 			this.llistaArticles.put(article.getReferencia(), article);
 			return true;
 		}
 		return false;
-		
-	}
-	
-	
 
-	public boolean elmininarArticle(String idArticle){
-	
-		if(this.llistaArticles.containsKey(idArticle)) {
+	}
+
+	public boolean elmininarArticle(String idArticle) {
+
+		if (this.llistaArticles.containsKey(idArticle)) {
 			this.llistaArticles.remove(idArticle);
 			return true;
 		}
 		return false;
-		
-		
+
 	}
-	public boolean eliminaArticle(Article article){
-		
-		if(this.llistaArticles.containsValue(article)) {
+
+	public boolean eliminaArticle(Article article) {
+
+		if (this.llistaArticles.containsValue(article)) {
 			this.llistaArticles.remove(article.getReferencia(), article);
 			return true;
 		}
 		return false;
-		
+
 	}
-	
+
 	public ArrayList<String> llistaArticle(TipusArticle tipusArticle, TipusExtensio tipusExtensio) {
 		ArrayList<String> llista = new ArrayList<String>();
-		
-		for (Map.Entry<Integer, Article> entry:  llistaArticles.entrySet()) {
-		    if(entry.getValue().getTipusArticle().equals(tipusArticle)) {
-		    	llista.add(entry.getValue().toXML(tipusExtensio));
-		    }
+
+		for (Map.Entry<Integer, Article> entry : llistaArticles.entrySet()) {
+			if (entry.getValue().getTipusArticle().equals(tipusArticle)) {
+				llista.add(entry.getValue().toXML(tipusExtensio));
+			}
 		}
 		if (tipusArticle.equals(TipusArticle.DISC)) {
 			String txtXml = "";
 			txtXml = txtXml + "<LlistaDiscs>" + "\n";
-			txtXml = txtXml + "<LlistaDiscs>" + "\n";
+			txtXml = txtXml + "</LlistaDiscs>" + "\n";
 		} else if (tipusArticle.equals(TipusArticle.LLIBRE)) {
 			String txtXml = "";
 			txtXml = txtXml + "<LlistaLlibres>" + "\n";
-			txtXml = txtXml + "<LlistaLlibres>" + "\n";
+			txtXml = txtXml + "</LlistaLlibres>" + "\n";
 		} else {
 			String txtXml = "";
 			txtXml = txtXml + "<LlistaPelicules>" + "\n";
-			txtXml = txtXml + "<LlistaPelicules>" + "\n";
+			txtXml = txtXml + "</LlistaPelicules>" + "\n";
 		}
 		return llista;
 	}
-	
-	
 
-	public ArrayList<String> tornaLlista(TipusExtensio tipusExtensio){
-		
+	public ArrayList<String> tornaLlista(TipusExtensio tipusExtensio) {
+
 		ArrayList<String> llista = new ArrayList<String>();
-		
-		for (Map.Entry<Integer, Article> entry:  llistaArticles.entrySet()) {
-			
-		    	llista.add(entry.getValue().toXML(tipusExtensio));
-		    	
+
+		for (Map.Entry<Integer, Article> entry : llistaArticles.entrySet()) {
+
+			llista.add(entry.getValue().toXML(tipusExtensio));
+
 		}
 		return llista;
 	}
-	
-	public Article cercaArticle(Integer referencia){
-		
-		if(this.llistaArticles.containsKey(referencia)) {
+
+	public Article cercaArticle(Integer referencia) {
+
+		if (this.llistaArticles.containsKey(referencia)) {
 			return this.llistaArticles.get(referencia);
-			
+
 		}
 		return null;
-		
+
 	}
-	
-	/* Metodos del historial*/
-	public void afegeixVenta(Venta venta){}
-	
-	public boolean afegeixStock(){}
-	
-	public boolean restaStock() {}
-	
-	public ArrayList<Venta> llistaVenta(){
-		
-		
+
+
+	public void afegeixVenta(Venta venta) {
+		this.historial.add(venta);
 	}
+
+	// public boolean afegeixStock(){}
+
+	// public boolean restaStock() {}
+
 	
-	///////////////////////////////////////////
-	
-	
-	/* falta metodo actualizar stock con parametros referencia String y integer */
 }
+
+///////////////////////////////////////////
+
+/* falta metodo actualizar stock con parametros referencia String y integer */
