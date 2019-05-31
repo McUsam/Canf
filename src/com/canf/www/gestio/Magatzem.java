@@ -1,12 +1,16 @@
 package com.canf.www.gestio;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 import com.canf.www.articles.Article;
 import com.canf.www.articles.TipusArticle;
 import com.canf.www.articles.TipusExtensio;
+import com.canf.www.errors.ArticleNoExistentException;
+import com.canf.www.errors.QuantitatNoDisponibleException;
+import com.canf.www.errors.ValidacionException;
 
 public class Magatzem {
 
@@ -22,8 +26,6 @@ public class Magatzem {
 		this.historial = new ArrayList<Venta>();
 		this.llistaArticles = new HashMap<Integer, Article>();
 	}
-
-
 
 	public String getDireccio() {
 		return direccio;
@@ -66,26 +68,33 @@ public class Magatzem {
 
 	public ArrayList<String> llistaArticle(TipusArticle tipusArticle, TipusExtensio tipusExtensio) {
 		ArrayList<String> llista = new ArrayList<String>();
-
+		String txtXml = "";
+		
+		if (tipusArticle.equals(TipusArticle.DISC)) {
+			txtXml = txtXml + "<LlistaDiscs>" + "\n";
+		} else if (tipusArticle.equals(TipusArticle.LLIBRE)) {
+			txtXml = txtXml + "<LlistaLlibres>" + "\n";
+		} else {
+			txtXml = txtXml + "<LlistaPelicules>" + "\n";
+		}
+		
 		for (Map.Entry<Integer, Article> entry : llistaArticles.entrySet()) {
 			if (entry.getValue().getTipusArticle().equals(tipusArticle)) {
 				llista.add(entry.getValue().toXML(tipusExtensio));
 			}
 		}
+		
 		if (tipusArticle.equals(TipusArticle.DISC)) {
-			String txtXml = "";
-			txtXml = txtXml + "<LlistaDiscs>" + "\n";
 			txtXml = txtXml + "</LlistaDiscs>" + "\n";
 		} else if (tipusArticle.equals(TipusArticle.LLIBRE)) {
-			String txtXml = "";
-			txtXml = txtXml + "<LlistaLlibres>" + "\n";
 			txtXml = txtXml + "</LlistaLlibres>" + "\n";
 		} else {
-			String txtXml = "";
-			txtXml = txtXml + "<LlistaPelicules>" + "\n";
 			txtXml = txtXml + "</LlistaPelicules>" + "\n";
 		}
-		return llista;
+		
+		
+		 Collections.sort(llista);
+		 return llista;
 	}
 
 	public ArrayList<String> tornaLlista(TipusExtensio tipusExtensio) {
@@ -97,27 +106,54 @@ public class Magatzem {
 			llista.add(entry.getValue().toXML(tipusExtensio));
 
 		}
-		return llista;
-	}
+		 Collections.sort(llista);
+		 return llista;	}
 
-	public Article cercaArticle(Integer referencia) {
+	public Article cercaArticle(Integer referencia) throws ArticleNoExistentException {
 
 		if (this.llistaArticles.containsKey(referencia)) {
 			return this.llistaArticles.get(referencia);
 
+		}else {
+			
+			throw new ArticleNoExistentException();
 		}
-		return null;
-
+		
+		
+		
 	}
 
-	
 	public void afegeixVenta(Venta venta) {
 		this.historial.add(venta);
 	}
 
-	// public boolean afegeixStock(){}
+	 public boolean afegeixStock(Integer referencia, int quantitat){
+		 
+		 quantitat = this.llistaArticles.get(referencia).getStock() + quantitat;
+		 
+		 try {
+			this.llistaArticles.get(referencia).setStock(quantitat);
+		} catch (ValidacionException e) {
+			e.printStackTrace();
+		}
+		 
+		 return true;
+	 }
 
-	// public boolean restaStock() {}
+	 public boolean restaStock(Integer referencia, int quantitat) throws QuantitatNoDisponibleException, ValidacionException {
+		 
+		 
+		 if(this.llistaArticles.get(referencia).getStock() - quantitat < 0) {
+			 throw new QuantitatNoDisponibleException();
+		 }
+		 else {
+			 quantitat = this.llistaArticles.get(referencia).getStock() - quantitat;
+			 this.llistaArticles.get(referencia).setStock(quantitat);
+			 return true;
+		 }
+	
+		 
+	 }
 
 	public ArrayList<String> llistaVenta() {
 
@@ -134,7 +170,6 @@ public class Magatzem {
 				txtXml = "<Preu>" + entry.getValue().getPreu() + "</preu>" + "\n";
 				txtXml = "<Quantitat>" + entry.getValue().getQuantitat() + "</Quantitat>" + "\n";
 				txtXml = txtXml + "</LiniaFactura>" + "\n";
-
 			}
 			txtXml = txtXml + "</venta>" + "\n";
 			llista.add(new String(txtXml));
