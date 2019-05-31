@@ -7,10 +7,12 @@ import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import com.canf.www.articles.Article;
+import com.canf.www.articles.TipusExtensio;
+import com.canf.www.errors.DataException;
 import com.canf.www.errors.ValidacionException;
 
 public class Venta {
-	private static final AtomicInteger count = new AtomicInteger(0);
+	private static final AtomicInteger count = new AtomicInteger(0);//revisar
 	private HashMap<Integer, LiniaFactura> factura;
 	private String client;
 	private LocalDate data;
@@ -19,12 +21,14 @@ public class Venta {
 		super();
 		this.factura = new HashMap<Integer, LiniaFactura>();
 		this.client = client;
+		data=LocalDate.now();
 	}
 
 	public Venta(HashMap<Integer, LiniaFactura> factura, String client) {
 		super();
 		this.factura = factura;
 		this.client = client;
+		data=LocalDate.now();
 	}
 
 	public String getClient() {
@@ -35,13 +39,17 @@ public class Venta {
 		return data;
 	}
 
-	public boolean afegeixArticle(LiniaFactura a) {
-		if (factura.containsValue(a)) {
-			return false;
-		} else {
-			factura.put(count.getAndIncrement(), a);
-			return true;
-		}
+	public boolean afegeixArticle(LiniaFactura a) throws DataException {
+		
+		if(data.isEqual(LocalDate.now())) {
+				if (factura.containsValue(a)) {
+					return false;
+			} else {
+				factura.put(count.getAndIncrement(), a);
+				return true;
+			}
+		} else 
+			throw new DataException("No se pot afegir productes.");
 	}
 
 	public double esborraArticle(LiniaFactura a) throws ValidacionException {
@@ -61,6 +69,18 @@ public class Venta {
 			a = a + factura.get(i).getPreu() * factura.get(i).getQuantitat();
 		}
 		return a;
+	}
+	public String toXML() {
+		String txtXml = "";
+			txtXml = txtXml + "<Venta>" + "\n";
+			txtXml = txtXml + "<data>" + data + "</data>" + "\n";
+			for (int i =0; i<factura.size();i++) {
+				txtXml = txtXml + factura.get(i).toXML()+ "\n";
+			}
+			txtXml = txtXml + "<client>" + client + "</client> " + "\n";
+			txtXml = txtXml + "<total>" + calculaTotal() + "</total>"+"\n";
+			txtXml = txtXml + "</Venta>";
+		return txtXml;
 	}
 
 }
