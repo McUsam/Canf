@@ -1,6 +1,7 @@
 package com.canf.www.gestio;
 
 import com.canf.www.articles.Article;
+import com.canf.www.articles.TipusExtensio;
 import com.canf.www.errors.QuantitatNoDisponibleException;
 import com.canf.www.errors.ValidacionException;
 import com.canf.www.validacions.Validacions;
@@ -53,6 +54,16 @@ public class LiniaFactura {
 	@Override
 	public String toString() {
 		return "LiniaFactura [article=" + article + ", preu=" + preu + ", quantitat=" + quantitat + "]";
+	}
+	public String toXML() {
+		String txtXml = ""+"\n";
+			txtXml = txtXml + "<LiniaArticle>" + "\n";
+			txtXml = txtXml + "<Article>" + article.getReferencia() + "</Article> " + "\n";
+			txtXml = txtXml + "<preu>" + preu + "</preu>" + "\n";
+			txtXml = txtXml + "<quantitat>" + quantitat + "</quantitat>" + "\n";
+			txtXml = txtXml + "</LiniaArticle>";
+		
+		return txtXml;
 	}
 
 }
