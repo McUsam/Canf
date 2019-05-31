@@ -11,32 +11,32 @@ public final class Disc extends Article {
 
 	private String interpret;
 	private ArrayList<String> llistaCansons;
-	private String discografia;
+	private String discografica;
 
 	
-
-	public Disc(String interpret, ArrayList<String> llistaCansons, String discografia, String nom, String descripcio, double preu, int stock) throws ValidacionException {
+        
+	public Disc(String interpret, ArrayList<String> llistaCansons, String discografica, String nom, String descripcio, double preu, int stock) throws ValidacionException {
         super(nom, descripcio, preu, TipusArticle.DISC, stock);
         setInterpret(interpret);
+
        this.llistaCansons = llistaCansons;
-       Collections.sort(this.llistaCansons);
-       setDiscografia(discografia);
+       setDiscografica(discografica);
     }
 
-	public Disc(String interpret, String discografia, String nom, String descripcio, double preu, int stock) throws ValidacionException {
+	public Disc(String interpret, String discografica, String nom, String descripcio, double preu, int stock) throws ValidacionException {
 		super(nom, descripcio, preu, TipusArticle.DISC, stock);
 		setInterpret(interpret);
 		this.llistaCansons = new ArrayList<>();
-		setDiscografia(discografia);
+		setDiscografica(discografica);
 	}
 
+    
+
 	public boolean afegirCanso(String nomCanso) {
-		Collections.sort(this.llistaCansons);
 		return llistaCansons.add(nomCanso);
 	}
 
 	public boolean esborraCanso(String nomCanso) {
-		Collections.sort(this.llistaCansons);
 		return llistaCansons.remove(nomCanso);
 	}
 
@@ -47,21 +47,18 @@ public final class Disc extends Article {
 		return null;
 	}
 
-    public void toXML(String x){
-       
-    }
+  
 
 	public String getInterpret() {
 		return interpret;
 	}
 
 	public ArrayList<String> getLlistaCansons() {
-		Collections.sort(this.llistaCansons);
 		return llistaCansons;
 	}
 
-	public String getDiscografia() {
-		return discografia;
+	public String getDiscografica() {
+		return discografica;
 	}
 
 	public void setInterpret(String interpret) throws ValidacionException {
@@ -71,16 +68,24 @@ public final class Disc extends Article {
 			throw new ValidacionException("No pot ser null o una cadena buida.");
 	}
 
-	public void setDiscografia(String discografia) throws ValidacionException {
-		if(Validacions.validaString(discografia))
-			this.discografia = discografia;
+	public void setDiscografica(String discografica) throws ValidacionException {
+		if(Validacions.validaString(discografica))
+			this.discografica = discografica;
 		else 
 			throw new ValidacionException("No pot ser null o una cadena buida.");
 	}
 
+	@Override
+	public String toString() {
+		return "Disc [interpret=" + interpret + ", llistaCansons=" + llistaCansons + ", discografia=" + discografica
+				+ "]";
+	}
+
+	@Override
 	public String toXML(TipusExtensio x) {
+		
 		String txtXml = "";
-		if (x == TipusExtensio.EXTENS) {
+                if (x == TipusExtensio.EXTENS) {
 			txtXml = txtXml + "<Disc>" + "\n";
 			txtXml = txtXml + "<referencia>" + getReferencia() + "</referencia> " + "\n";
 			txtXml = txtXml + "<nom>" + getNom() + "</nom>" + "\n";
@@ -88,10 +93,16 @@ public final class Disc extends Article {
 			txtXml = txtXml + "<preu>" + getPreu() + "</preu>" + "\n";
 			txtXml = txtXml + "<tipusArticle>" + getTipusArticle() + "</tipusArticle>" + "\n";
 			txtXml = txtXml + "<stock>" + getStock() + "</stock>" + "\n";
-			txtXml = txtXml + "<interpret>" + interpret + "</interpret> " + "\n";
-			txtXml = txtXml + "llistaCansons" + llistaCansons + "</llistaCansons> " + "\n";
-			txtXml = txtXml + "discografia" + discografia + "</discografia> " + "\n";
-			txtXml = txtXml + "</Disc>";
+                        
+			txtXml = txtXml + "<intetpret>" + getInterpret() + "</interpret>" + "\n";
+                        txtXml = txtXml + "<llistaCansons>" + "\n";
+                                for (String llistaCansons1 : llistaCansons) {
+                        txtXml = txtXml   + "<canso>" + llistaCansons1  + "</canso>" + "\n" ;
+                    }
+                             txtXml = txtXml   + "</llistaCansons>" + "\n";
+                                
+			txtXml = txtXml + "<discografica>" + discografica +  "</discografica>" + "\n";
+			txtXml = txtXml + "</Pelicula>";
 		} else {
 			txtXml = txtXml + "<Disc>" + "\n";
 			txtXml = txtXml + "<referencia>" + getReferencia() + "</referencia> " + "\n";
@@ -99,12 +110,7 @@ public final class Disc extends Article {
 			txtXml = txtXml + "<descripcio>" + getDescripcio() + "</descripcio>" + "\n";
 			txtXml = txtXml + "</Disc>";
 		}
-	return txtXml;
-		
-	}	
-	@Override
-	public String toString() {
-		return "Disc [interpret=" + interpret + ", llistaCansons=" + llistaCansons + ", discografia=" + discografia
-				+ "]";
+		return txtXml;
 	}
+
 }

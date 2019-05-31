@@ -16,15 +16,14 @@ public final class Llibre extends Article {
 		setAutor(autor);
 		setEditor(editor);
 		setNumPagines(numPagines);
+                
 		if (Validacions.validaString(isbn))
 			this.isbn = isbn;
 		else
 			throw new ValidacionException("No pot ser null o una cadena buida.");
 	}
 
-	public void toXML(String x) {
-
-	}
+	
 
 	public String getAutor() {
 		return autor;
@@ -62,29 +61,16 @@ public final class Llibre extends Article {
 		else
 			throw new ValidacionException("El numero de pagines no pot ser 0 o negatiu");
 	}
-	
-	public String toXML(TipusExtensio x) {
-		String txtXml = "";
-		if (x == TipusExtensio.EXTENS) {
-			txtXml = txtXml + "<Llibre>" + "\n";
-			txtXml = txtXml + "<referencia>" + getReferencia() + "</referencia> " + "\n";
-			txtXml = txtXml + "<nom>" + getNom() + "</nom>" + "\n";
-			txtXml = txtXml + "<descripcio>" + getDescripcio() + "</descripcio>" + "\n";
-			txtXml = txtXml + "<preu>" + getPreu() + "</preu>" + "\n";
-			txtXml = txtXml + "<tipusArticle>" + getTipusArticle() + "</tipusArticle>" + "\n";
-			txtXml = txtXml + "<stock>" + getStock() + "</stock>" + "\n";
-			txtXml = txtXml + "<autor>" + autor + "</autor>" + "\n";
-			txtXml = txtXml + "<editor>" + editor +"</editor>" + "\n";
-			txtXml = txtXml + "<numPagines>" + numPagines + "</numPagines>" + "\n";
-			txtXml = txtXml + "<isbn>" + isbn	+ "</isbn>" + "\n";
-			txtXml = txtXml + "</Llibre>";
-		} else {
-			txtXml = txtXml + "<Llibre>" + "\n";
-			txtXml = txtXml + "<referencia>" + getReferencia() + "</referencia> " + "\n";
-			txtXml = txtXml + "<nom>" + getNom() + "</nom>" + "\n";
-			txtXml = txtXml + "<descripcio>" + getDescripcio() + "</descripcio>" + "\n";
-			txtXml = txtXml + "</Llibre>";
-		}
+
+	public String toXml() {
+
+		String txtXml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+		txtXml = txtXml + (char) 10 + (char) 13;
+		txtXml = txtXml + "<llibre ";
+		txtXml = txtXml + "autor=\"" + autor + "\" ";
+		txtXml = txtXml + "editor=\"" + editor + "\" ";
+		txtXml = txtXml + "numPagines=\"" + numPagines + "\" ";
+		txtXml = txtXml + "isbn=\"" + isbn	+ "\" ";
 		return txtXml;
 	}
 	
@@ -92,4 +78,7 @@ public final class Llibre extends Article {
 	public String toString() {
 		return "Llibre [autor=" + autor + ", editor=" + editor + ", numPagines=" + numPagines + ", isbn=" + isbn + "]";
 	}
+
+	
+
 }
