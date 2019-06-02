@@ -1,16 +1,13 @@
 package com.canf.www.gestio;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 import com.canf.www.articles.Article;
+import com.canf.www.articles.Disc;
 import com.canf.www.articles.TipusArticle;
 import com.canf.www.articles.TipusExtensio;
-import com.canf.www.errors.ArticleNoExistentException;
-import com.canf.www.errors.QuantitatNoDisponibleException;
-import com.canf.www.errors.ValidacionException;
 
 public class Magatzem {
 
@@ -26,6 +23,8 @@ public class Magatzem {
 		this.historial = new ArrayList<Venta>();
 		this.llistaArticles = new HashMap<Integer, Article>();
 	}
+
+
 
 	public String getDireccio() {
 		return direccio;
@@ -68,33 +67,26 @@ public class Magatzem {
 
 	public ArrayList<String> llistaArticle(TipusArticle tipusArticle, TipusExtensio tipusExtensio) {
 		ArrayList<String> llista = new ArrayList<String>();
-		String txtXml = "";
-		
-		if (tipusArticle.equals(TipusArticle.DISC)) {
-			txtXml = txtXml + "<LlistaDiscs>" + "\n";
-		} else if (tipusArticle.equals(TipusArticle.LLIBRE)) {
-			txtXml = txtXml + "<LlistaLlibres>" + "\n";
-		} else {
-			txtXml = txtXml + "<LlistaPelicules>" + "\n";
-		}
-		
+
 		for (Map.Entry<Integer, Article> entry : llistaArticles.entrySet()) {
 			if (entry.getValue().getTipusArticle().equals(tipusArticle)) {
 				llista.add(entry.getValue().toXML(tipusExtensio));
 			}
 		}
-		
 		if (tipusArticle.equals(TipusArticle.DISC)) {
+			String txtXml = "";
+			txtXml = txtXml + "<LlistaDiscs>" + "\n";
 			txtXml = txtXml + "</LlistaDiscs>" + "\n";
 		} else if (tipusArticle.equals(TipusArticle.LLIBRE)) {
+			String txtXml = "";
+			txtXml = txtXml + "<LlistaLlibres>" + "\n";
 			txtXml = txtXml + "</LlistaLlibres>" + "\n";
 		} else {
+			String txtXml = "";
+			txtXml = txtXml + "<LlistaPelicules>" + "\n";
 			txtXml = txtXml + "</LlistaPelicules>" + "\n";
 		}
-		
-		
-		 Collections.sort(llista);
-		 return llista;
+		return llista;
 	}
 
 	public ArrayList<String> tornaLlista(TipusExtensio tipusExtensio) {
@@ -106,54 +98,50 @@ public class Magatzem {
 			llista.add(entry.getValue().toXML(tipusExtensio));
 
 		}
-		 Collections.sort(llista);
-		 return llista;	}
+		return llista;
+	}
 
-	public Article cercaArticle(Integer referencia) throws ArticleNoExistentException {
+	public Article cercaArticle(Integer referencia) {
 
 		if (this.llistaArticles.containsKey(referencia)) {
 			return this.llistaArticles.get(referencia);
 
-		}else {
-			
-			throw new ArticleNoExistentException();
 		}
-		
-		
-		
-	}
+		return null;
 
+	}
+        
+        /**
+         * Crearia una llista dels discs sobre el autor cercat.
+         * 
+         * 
+         * 
+         * @param autor
+         * @return 
+         */
+        public ArrayList<String> cercaDiscPerAutor(String autor){
+            
+            ArrayList<String> llistaAutor = new ArrayList<>();
+            for (int i = 0; i < llistaArticles.size(); i++) {
+                
+                //Aixó de auí comentat es el que no està be. - Auria de anar a partir de la llistaArticles fins a autor
+//                if(llistaArticles.containsKey(i)){ 
+//                    llistaAutor.add(llistaArticles.getClass().getName());
+//                }
+                
+            }
+            return llistaAutor;
+            
+        }
+
+	
 	public void afegeixVenta(Venta venta) {
 		this.historial.add(venta);
 	}
 
-	 public boolean afegeixStock(Integer referencia, int quantitat){
-		 
-		 quantitat = this.llistaArticles.get(referencia).getStock() + quantitat;
-		 
-		 try {
-			this.llistaArticles.get(referencia).setStock(quantitat);
-		} catch (ValidacionException e) {
-			e.printStackTrace();
-		}
-		 
-		 return true;
-	 }
+	// public boolean afegeixStock(){}
 
-	 public boolean restaStock(Integer referencia, int quantitat) throws QuantitatNoDisponibleException, ValidacionException {
-		 
-		 
-		 if(this.llistaArticles.get(referencia).getStock() - quantitat < 0) {
-			 throw new QuantitatNoDisponibleException();
-		 }
-		 else {
-			 quantitat = this.llistaArticles.get(referencia).getStock() - quantitat;
-			 this.llistaArticles.get(referencia).setStock(quantitat);
-			 return true;
-		 }
-	
-		 
-	 }
+	// public boolean restaStock() {}
 
 	public ArrayList<String> llistaVenta() {
 
@@ -170,6 +158,7 @@ public class Magatzem {
 				txtXml = "<Preu>" + entry.getValue().getPreu() + "</preu>" + "\n";
 				txtXml = "<Quantitat>" + entry.getValue().getQuantitat() + "</Quantitat>" + "\n";
 				txtXml = txtXml + "</LiniaFactura>" + "\n";
+
 			}
 			txtXml = txtXml + "</venta>" + "\n";
 			llista.add(new String(txtXml));
@@ -180,6 +169,8 @@ public class Magatzem {
 		return llista;
 
 	}
+
+    
 
 }
 
