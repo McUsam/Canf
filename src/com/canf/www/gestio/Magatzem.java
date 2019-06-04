@@ -14,14 +14,11 @@ import com.canf.www.errors.ValidacionException;
 
 public class Magatzem {
 
-	
 	private HashMap<Integer, Article> llistaArticles;
 	private ArrayList<Venta> historial;
 	private String direccio;
 
-
 	public Magatzem(String direccio) {
-		System.out.println("hola");
 		this.direccio = direccio;
 		this.historial = new ArrayList<Venta>();
 		this.llistaArticles = new HashMap<Integer, Article>();
@@ -34,7 +31,6 @@ public class Magatzem {
 	public void setDireccio(String direccio) {
 		this.direccio = direccio;
 	}
-
 
 	public boolean afegeixArticle(Article article) {
 
@@ -69,7 +65,7 @@ public class Magatzem {
 	public ArrayList<String> llistaArticle(TipusArticle tipusArticle, TipusExtensio tipusExtensio) {
 		ArrayList<String> llista = new ArrayList<String>();
 		String txtXml = "";
-		
+
 		if (tipusArticle.equals(TipusArticle.DISC)) {
 			txtXml = txtXml + "<LlistaDiscs>" + "\n";
 		} else if (tipusArticle.equals(TipusArticle.LLIBRE)) {
@@ -77,13 +73,13 @@ public class Magatzem {
 		} else {
 			txtXml = txtXml + "<LlistaPelicules>" + "\n";
 		}
-		
+
 		for (Map.Entry<Integer, Article> entry : llistaArticles.entrySet()) {
 			if (entry.getValue().getTipusArticle().equals(tipusArticle)) {
 				llista.add(entry.getValue().toXML(tipusExtensio));
 			}
 		}
-		
+
 		if (tipusArticle.equals(TipusArticle.DISC)) {
 			txtXml = txtXml + "</LlistaDiscs>" + "\n";
 		} else if (tipusArticle.equals(TipusArticle.LLIBRE)) {
@@ -91,10 +87,9 @@ public class Magatzem {
 		} else {
 			txtXml = txtXml + "</LlistaPelicules>" + "\n";
 		}
-		
-		
-		 Collections.sort(llista);
-		 return llista;
+
+		Collections.sort(llista);
+		return llista;
 	}
 
 	public ArrayList<String> tornaLlista(TipusExtensio tipusExtensio) {
@@ -106,90 +101,57 @@ public class Magatzem {
 			llista.add(entry.getValue().toXML(tipusExtensio));
 
 		}
-		 Collections.sort(llista);
-		 return llista;	}
+		Collections.sort(llista);
+		return llista;
+	}
 
 	public Article cercaArticle(Integer referencia) throws ArticleNoExistentException {
 
 		if (this.llistaArticles.containsKey(referencia)) {
 			return this.llistaArticles.get(referencia);
 
-		}else {
-			
-			throw new ArticleNoExistentException();
+		} else {
+
+			throw new ArticleNoExistentException("L'article no existeix");
 		}
-		
-		
-		
+
 	}
 
 	public void afegeixVenta(Venta venta) {
 		this.historial.add(venta);
 	}
 
-	 public boolean afegeixStock(Integer referencia, int quantitat){
-		 
-		 quantitat = this.llistaArticles.get(referencia).getStock() + quantitat;
-		 
-		 try {
+	public boolean afegeixStock(Integer referencia, int quantitat) throws ValidacionException {
+
+		quantitat = this.llistaArticles.get(referencia).getStock() + quantitat;
+
+		this.llistaArticles.get(referencia).setStock(quantitat);
+
+		return true;
+	}
+
+	public boolean restaStock(Integer referencia, int quantitat)
+			throws QuantitatNoDisponibleException, ValidacionException {
+
+		if (this.llistaArticles.get(referencia).getStock() - quantitat <= 0) {
+			throw new QuantitatNoDisponibleException("No hi ha suficiente stock");
+		} else {
+			quantitat = this.llistaArticles.get(referencia).getStock() - quantitat;
 			this.llistaArticles.get(referencia).setStock(quantitat);
-		} catch (ValidacionException e) {
-			e.printStackTrace();
+			return true;
 		}
-		 
-		 return true;
-	 }
-
-	 public boolean restaStock(Integer referencia, int quantitat) throws QuantitatNoDisponibleException, ValidacionException {
-		 
-		 
-		 if(this.llistaArticles.get(referencia).getStock() - quantitat < 0) {
-			 throw new QuantitatNoDisponibleException();
-		 }
-		 else {
-			 quantitat = this.llistaArticles.get(referencia).getStock() - quantitat;
-			 this.llistaArticles.get(referencia).setStock(quantitat);
-			 return true;
-		 }
-	
-		 
-	 }
-
-	public ArrayList<String> llistaVenta() {
-
-		ArrayList<String> llista = new ArrayList<String>();
-		
-		String txtXml = "";
-		txtXml = txtXml + "<LlistaVenta>" + "\n";
-		llista.add(txtXml);
-		for(Venta venta : this.historial) {
-			
-			llista.add(venta.toXML());
-		}
-		txtXml = txtXml + "<LlistaVenta>" + "\n";
-		llista.add(txtXml);
-		return llista;
 
 	}
 
-	
-	public Article cercaPerInterpret(String interpret) throws ArticleNoExistentException{
+	public String llistaVenta() {
 		
-		ArrayList<Article> llista = new ArrayList<>();
-		
-		for (Map.Entry<Integer, Article> entry : llistaArticles.entrySet()) {
+		String toXML = "";
 
-			if(entry.getValue().getTipusArticle() == TipusArticle.DISC) {
-				
-				llista.add(entry.getValue());
-			}
-
+		for (Venta venta : this.historial) {
+			toXML = toXML+"</LlistaVentes>" + "\n" + venta.toXML() + "\n" + "</LlistaVentes>";
 		}
-		
-		throw new ArticleNoExistentException();
-		
-		
+		return toXML;
+
 	}
+
 }
-
-
