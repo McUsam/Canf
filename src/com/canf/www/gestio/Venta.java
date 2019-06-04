@@ -67,14 +67,8 @@ public class Venta {
 
     public double calculaTotal() {
         double a = 0;
-//        for (int i = 0; i < factura.size(); i++) {
-//            a = a + factura.get(i).getPreu() * factura.get(i).getQuantitat();
-//        }
-        
-        
         for (Map.Entry<Integer, LiniaFactura> entry : factura.entrySet()) {
-            Object i = 1;
-            a = a + factura.get(i).getPreu() * factura.get(i).getQuantitat();
+            a = a + entry.getValue().getPreu() * entry.getValue().getQuantitat();
         }
         
         return a;
