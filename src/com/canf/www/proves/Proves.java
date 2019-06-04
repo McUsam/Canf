@@ -1,9 +1,23 @@
 package com.canf.www.proves;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.EOFException;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.canf.www.articles.Disc;
 import com.canf.www.articles.Llibre;
+import com.canf.www.articles.Pelicula;
+import com.canf.www.articles.TipusArticle;
+import com.canf.www.articles.TipusExtensio;
+import com.canf.www.errors.ArticleNoExistentException;
 import com.canf.www.errors.QuantitatNoDisponibleException;
 import com.canf.www.errors.ValidacionException;
 import com.canf.www.gestio.LiniaFactura;
@@ -14,49 +28,69 @@ public class Proves {
 
 	public static void main(String[] args) {
 		
-		System.out.println("0");
+		Proves proves = new Proves();
 		try {
-			Llibre l1 = new Llibre("1","1",1,"1","1","1",1,1);
-			Llibre l2 = new Llibre("2","2",2,"2","2","2",2,2);
-			Llibre l3 = new Llibre("3","3",3,"3","3","3",3,3);
-			Llibre l4 = new Llibre("4","4",4,"4","4","4",4,4);
-			LiniaFactura lf1 = new LiniaFactura(l1,2);
-			LiniaFactura lf2 = new LiniaFactura(l2,3);
-			LiniaFactura lf3 = new LiniaFactura(l3,1);
-			LiniaFactura lf4 = new LiniaFactura(l4,3);
-			HashMap<Integer, LiniaFactura> venta = new HashMap<Integer,LiniaFactura>();
-			venta.put(1,lf1);
-			venta.put(2,lf2);
-			
-			HashMap<Integer, LiniaFactura> venta2 = new HashMap<Integer,LiniaFactura>();
-			venta2.put(1,lf3);
-			venta2.put(2,lf4);
-		
-
-		Venta v1 = new Venta(venta, "1");
-		Venta v2 = new Venta(venta2, "2");
-	
-		
-		Magatzem m1 = new Magatzem("Espain");
-		
-		m1.afegeixVenta(v1);
-		m1.afegeixVenta(v2);
-		
-		
-		ArrayList<String> llistat = new ArrayList<String>();
-		llistat = m1.llistaVenta();
-		System.out.println("1");
-		for(String st : llistat) {
-			System.out.println("2");
-			System.out.println(st);
-		}
-
-		
-		} catch (ValidacionException | QuantitatNoDisponibleException e) {
+			proves.provaMagatzem();
+		} catch (ValidacionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ArticleNoExistentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (QuantitatNoDisponibleException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+	
+	
+	public void provaMagatzem() throws ValidacionException, ArticleNoExistentException, QuantitatNoDisponibleException{
+		
+		Llibre llibre1 = new Llibre("autor1","editor1", 100, "isbn1", "nom", "descripcio", 100, 5);
+		Llibre llibre2 = new Llibre("autor2","editor2", 100, "isbn2", "nom", "descripcio", 200, 10);
+		Disc disc1 = new Disc("Interpret1", "Discografica1", "nom", "descripcio", 4, 20);
+		Disc disc2 = new Disc("Interpret2", "Discografica2", "nom", "descripcio", 8, 40);
+		Pelicula pelicula1 = new Pelicula("Director1","sinopsi","nom","descripcio",2,4);
+		Pelicula pelicula2 = new Pelicula("Director2","sinopsi","nom","descripcio",2,4);
+		
+		disc1.afegirCanso("canso1");
+		disc1.afegirCanso("canso2");
+
+		Magatzem magatzem = new Magatzem("Direccio 1");
+		magatzem.afegeixArticle(llibre1);
+		magatzem.afegeixArticle(llibre2);
+		magatzem.afegeixArticle(pelicula1);
+		magatzem.afegeixArticle(pelicula2);
+		magatzem.afegeixArticle(disc1);
+		magatzem.afegeixArticle(disc2);
+		
+
+		magatzem.cercaDiscsCantant("Interpret1", TipusExtensio.EXTENS);
+		magatzem.cercaLlibreAutor("autor1", TipusExtensio.EXTENS);
+		magatzem.cercaPeliculaDirector("Director1", TipusExtensio.EXTENS);
+		
+		magatzem.afegeixStock(1, 20);
+		Venta venta1 = new Venta("cliente1");
+		magatzem.afegeixVenta(venta1);
+		
+		magatzem.cercaArticle(1);
+		magatzem.eliminaArticle(disc1);
+		magatzem.eliminarArticle(2);
+		
+		magatzem.getDireccio();
+		magatzem.llistaArticle(TipusArticle.DISC, TipusExtensio.EXTENS);
+		
+		magatzem.llistaVenta();
+		
+		magatzem.restaStock(2, 3);
+		
+		magatzem.setDireccio("direccio2");
+		
+		magatzem.tornaLlista(TipusExtensio.EXTENS);
+		
+		System.out.println(magatzem.cercaArticle(1).getStock());	}
+	
+	
 	public void escriuTotsObjectes(String desti, Magatzem magatzem) {
 		try (ObjectOutputStream p = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(desti)));) {
 			p.writeObject(magatzem);
