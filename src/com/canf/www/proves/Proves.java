@@ -57,6 +57,37 @@ public class Proves {
 			e.printStackTrace();
 		}
 	}
+	public void escriuTotsObjectes(String desti, Magatzem magatzem) {
+		try (ObjectOutputStream p = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(desti)));) {
+			p.writeObject(magatzem);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	public Magatzem llegeixTotsObjectes(String origen) {
+		Magatzem magatzem = null;
+		try (ObjectInputStream p = new ObjectInputStream(new BufferedInputStream(new FileInputStream(origen)));) {
+
+			try {
+				while (true) {
+					magatzem=((Magatzem) p.readObject());
+				}
+			} catch (EOFException e) {
+
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return magatzem;
+	}
 
 	
 	
