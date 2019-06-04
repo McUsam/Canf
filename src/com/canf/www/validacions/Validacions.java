@@ -10,7 +10,7 @@ public class Validacions {
 		return (p!=null && !p.isEmpty());
 	}
 	public static boolean validaInt(Integer m) {
-		return (m!=null && m>0);
+		return (m!=null && m>=0);
 	}
 	public static boolean validaDouble(double m) {
 		return (m>0);
