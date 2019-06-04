@@ -36,7 +36,7 @@ public class LiniaFactura {
 
 	public void setQuantitat(int quantitat) throws ValidacionException, QuantitatNoDisponibleException {
 		if (Validacions.validaInt(quantitat)) {
-			if (article.getStock() > quantitat) {
+			if (article.getStock() >= quantitat) {
 				this.quantitat = quantitat;
 				article.setStock(article.getStock() - quantitat);
 			} else {
