@@ -102,7 +102,7 @@ public final class Disc extends Article {
                              txtXml = txtXml   + "</llistaCansons>" + "\n";
                                 
 			txtXml = txtXml + "<discografica>" + discografica +  "</discografica>" + "\n";
-			txtXml = txtXml + "</Pelicula>";
+			txtXml = txtXml + "</Disc>";
 		} else {
 			txtXml = txtXml + "<Disc>" + "\n";
 			txtXml = txtXml + "<referencia>" + getReferencia() + "</referencia> " + "\n";
