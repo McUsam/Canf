@@ -6,11 +6,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.canf.www.articles.Article;
+import com.canf.www.articles.Disc;
+import com.canf.www.articles.Llibre;
+import com.canf.www.articles.Pelicula;
 import com.canf.www.articles.TipusArticle;
 import com.canf.www.articles.TipusExtensio;
 import com.canf.www.errors.ArticleNoExistentException;
 import com.canf.www.errors.QuantitatNoDisponibleException;
 import com.canf.www.errors.ValidacionException;
+import com.canf.www.validacions.Validacions;
 
 public class Magatzem {
 
@@ -42,7 +46,7 @@ public class Magatzem {
 
 	}
 
-	public boolean eliminarArticle(String idArticle) {
+	public boolean eliminarArticle(Integer idArticle) {
 
 		if (this.llistaArticles.containsKey(idArticle)) {
 			this.llistaArticles.remove(idArticle);
@@ -63,7 +67,6 @@ public class Magatzem {
 	}
 
 	public String llistaArticle(TipusArticle tipusArticle, TipusExtensio tipusExtensio) {
-		ArrayList<String> llista = new ArrayList<String>();
 		String txtXml = "";
 
 		if (tipusArticle.equals(TipusArticle.DISC)) {
@@ -140,8 +143,8 @@ public class Magatzem {
 		}
 
 	}
-	public String cercaDiscsCantant(String nom, TipusExtensio tipus) throws ArticleNoExistentException, ValidacionException {
-		if(Validacions.validaString(nom)) {
+	public String cercaDiscsCantant(String nom, TipusExtensio tipus) throws ValidacionException, ArticleNoExistentException {
+		if(!Validacions.validaString(nom)) {
 			throw new ValidacionException("El nom no pot ser una cadena buida o null.");
 		}
 		
@@ -150,44 +153,57 @@ public class Magatzem {
 		txtXml = txtXml + "<Artista>" + nom+"</Artista>"+"\n";
 		txtXml = txtXml + "<Discs>" + "\n";
 		Disc a = null;
+		boolean trobat = false;
 		for (Article entry : llistaArticles.values()) {
 			if (entry.getTipusArticle().equals(TipusArticle.DISC)) {
 				a = (Disc) entry;
-				if(a.getInterpret().equals(nom))
+				if(a.getInterpret().equals(nom)) {
 					txtXml = txtXml +a.toXML(tipus)+"\n";
+					trobat = true;
+					}
+			
+					
 			}
 		}
-		txtXml = txtXml + "</Discs>" + "\n";
+		txtXml = txtXml + "</Disc>" + "\n";
 		txtXml = txtXml + "</LlistaArtista>" + "\n";
-		return txtXml;
+		if(trobat) {return txtXml;}
+		else { throw new ArticleNoExistentException();}
 		
 		
 	}
 	public String cercaLlibreAutor(String nom, TipusExtensio tipus) throws ArticleNoExistentException, ValidacionException {
-		if(Validacions.validaString(nom)) {
+		
+		if(!Validacions.validaString(nom)) {
 			throw new ValidacionException("El nom no pot ser una cadena buida o null.");
 		}
+		
 		String txtXml = "";
-		txtXml = txtXml + "<LlistaAutor>" + "\n";
+		txtXml = txtXml + "<LlistaArtista>" + "\n";
 		txtXml = txtXml + "<Autor>" + nom+"</Autor>"+"\n";
 		txtXml = txtXml + "<Llibres>" + "\n";
 		Llibre a = null;
+		boolean trobat = false;
 		for (Article entry : llistaArticles.values()) {
 			if (entry.getTipusArticle().equals(TipusArticle.LLIBRE)) {
 				a = (Llibre) entry;
 				if(a.getAutor().equals(nom)) {
 					txtXml = txtXml +a.toXML(tipus)+"\n";
+					trobat = true;
+
 				}
 			}
 		}
 		txtXml = txtXml + "</Llibres>" + "\n";
 		txtXml = txtXml + "</LlistaArtista>" + "\n";
-		return txtXml;
+		if(trobat) {return txtXml;}
+		else { throw new ArticleNoExistentException();}
+		
 		
 		
 	}
 	public String cercaPeliculaDirector(String nom, TipusExtensio tipus) throws ArticleNoExistentException, ValidacionException {
-		if(Validacions.validaString(nom)) {
+		if(!Validacions.validaString(nom)) {
 			throw new ValidacionException("El nom no pot ser una cadena buida o null.");
 		}
 		String txtXml = "";
@@ -195,17 +211,21 @@ public class Magatzem {
 		txtXml = txtXml + "<Director>" + nom+"</Director>"+"\n";
 		txtXml = txtXml + "<Pelicules>"+"\n";
 		Pelicula a = null;
+		boolean trobat = false;
 		for (Article entry : llistaArticles.values()) {
 			if (entry.getTipusArticle().equals(TipusArticle.PELICULA)) {
 				a = (Pelicula) entry;
 				if(a.getDirector().equals(nom))
 					txtXml = txtXml +a.toXML(tipus)+"\n";
+				trobat = true;
 			}
 		}
 		
 		txtXml = txtXml + "</Pelicules>"+"\n";
 		txtXml = txtXml + "</LlistaArtista>" + "\n";
-		return txtXml;
+		if(trobat) {return txtXml;}
+		else { throw new ArticleNoExistentException();}
+		
 		
 		
 	}
