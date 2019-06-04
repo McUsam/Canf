@@ -88,7 +88,30 @@ public class Proves {
 		
 		magatzem.tornaLlista(TipusExtensio.EXTENS);
 		
-		System.out.println(magatzem.cercaArticle(1).getStock());	}
+		System.out.println(magatzem.cercaArticle(1).getStock());	
+	
+		Magatzem magatzem1 = new Magatzem("Spain");
+            Pelicula pelicula1 = new Pelicula("George Lucas", "Aventures Espacials", "La amanaça fantasma", "Aventures Espacials", 25.30, 15);
+            Pelicula pelicula2 = new Pelicula("George Lucas", "Aventures Espacials", "la guerra dels clons", "Aventures Espacials", 27.30, 12);
+            
+            Pelicula pelicula3 = new Pelicula("George Lucas", "Aventures Espacials", "Una nova esperança", "Aventures Espacials", 27.30, 12);
+            Pelicula pelicula4 = new Pelicula("George Lucas", "Aventures Espacials", "El imperi contraataca", "Aventures Espacials", 27.30, 12);
+            Pelicula pelicula5 = new Pelicula("George Lucas", "Aventures Espacials", "El retorn del jedi", "Aventures Espacials", 27.30, 12);
+            
+            
+            System.out.println(magatzem1.afegeixArticle(pelicula1)); // a afegir la pelicules una a una amb el métode al megatzem de Espanya.
+            System.out.println(magatzem1.afegeixArticle(pelicula2)); 
+            System.out.println(magatzem1.afegeixArticle(pelicula3));
+            System.out.println(magatzem1.afegeixArticle(pelicula4));
+            System.out.println(magatzem1.afegeixArticle(pelicula5));
+            System.out.println(magatzem1.eliminaArticle(pelicula2)); // esborra pelicula2 per un objecte Article
+            
+            System.out.println(magatzem1.llistaArticle(TipusArticle.PELICULA, TipusExtensio.EXTENS)); //veim llistat de pelicules -  llistaArticle - EXTENS
+            System.out.println("");            
+            System.out.println(magatzem1.llistaArticle(TipusArticle.PELICULA, TipusExtensio.SENZILL)); //veim llistat de pelicules - llistaArticle - SENZILL
+            System.out.println("");
+	
+	}
 	
 	
 	public void escriuTotsObjectes(String desti, Magatzem magatzem) {
