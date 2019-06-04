@@ -62,7 +62,7 @@ public class Magatzem {
 
 	}
 
-	public ArrayList<String> llistaArticle(TipusArticle tipusArticle, TipusExtensio tipusExtensio) {
+	public String llistaArticle(TipusArticle tipusArticle, TipusExtensio tipusExtensio) {
 		ArrayList<String> llista = new ArrayList<String>();
 		String txtXml = "";
 
@@ -76,7 +76,7 @@ public class Magatzem {
 
 		for (Map.Entry<Integer, Article> entry : llistaArticles.entrySet()) {
 			if (entry.getValue().getTipusArticle().equals(tipusArticle)) {
-				llista.add(entry.getValue().toXML(tipusExtensio));
+				txtXml = txtXml + entry.getValue().toXML(tipusExtensio)+"\n";
 			}
 		}
 
@@ -87,9 +87,7 @@ public class Magatzem {
 		} else {
 			txtXml = txtXml + "</LlistaPelicules>" + "\n";
 		}
-
-		Collections.sort(llista);
-		return llista;
+		return txtXml;
 	}
 
 	public ArrayList<String> tornaLlista(TipusExtensio tipusExtensio) {
@@ -141,6 +139,75 @@ public class Magatzem {
 			return true;
 		}
 
+	}
+	public String cercaDiscsCantant(String nom, TipusExtensio tipus) throws ArticleNoExistentException, ValidacionException {
+		if(Validacions.validaString(nom)) {
+			throw new ValidacionException("El nom no pot ser una cadena buida o null.");
+		}
+		
+		String txtXml = "";
+		txtXml = txtXml + "<LlistaArtista>" + "\n";
+		txtXml = txtXml + "<Artista>" + nom+"</Artista>"+"\n";
+		txtXml = txtXml + "<Discs>" + "\n";
+		Disc a = null;
+		for (Article entry : llistaArticles.values()) {
+			if (entry.getTipusArticle().equals(TipusArticle.DISC)) {
+				a = (Disc) entry;
+				if(a.getInterpret().equals(nom))
+					txtXml = txtXml +a.toXML(tipus)+"\n";
+			}
+		}
+		txtXml = txtXml + "</Discs>" + "\n";
+		txtXml = txtXml + "</LlistaArtista>" + "\n";
+		return txtXml;
+		
+		
+	}
+	public String cercaLlibreAutor(String nom, TipusExtensio tipus) throws ArticleNoExistentException, ValidacionException {
+		if(Validacions.validaString(nom)) {
+			throw new ValidacionException("El nom no pot ser una cadena buida o null.");
+		}
+		String txtXml = "";
+		txtXml = txtXml + "<LlistaAutor>" + "\n";
+		txtXml = txtXml + "<Autor>" + nom+"</Autor>"+"\n";
+		txtXml = txtXml + "<Llibres>" + "\n";
+		Llibre a = null;
+		for (Article entry : llistaArticles.values()) {
+			if (entry.getTipusArticle().equals(TipusArticle.LLIBRE)) {
+				a = (Llibre) entry;
+				if(a.getAutor().equals(nom)) {
+					txtXml = txtXml +a.toXML(tipus)+"\n";
+				}
+			}
+		}
+		txtXml = txtXml + "</Llibres>" + "\n";
+		txtXml = txtXml + "</LlistaArtista>" + "\n";
+		return txtXml;
+		
+		
+	}
+	public String cercaPeliculaDirector(String nom, TipusExtensio tipus) throws ArticleNoExistentException, ValidacionException {
+		if(Validacions.validaString(nom)) {
+			throw new ValidacionException("El nom no pot ser una cadena buida o null.");
+		}
+		String txtXml = "";
+		txtXml = txtXml + "<LlistaArtista>" + "\n";
+		txtXml = txtXml + "<Director>" + nom+"</Director>"+"\n";
+		txtXml = txtXml + "<Pelicules>"+"\n";
+		Pelicula a = null;
+		for (Article entry : llistaArticles.values()) {
+			if (entry.getTipusArticle().equals(TipusArticle.PELICULA)) {
+				a = (Pelicula) entry;
+				if(a.getDirector().equals(nom))
+					txtXml = txtXml +a.toXML(tipus)+"\n";
+			}
+		}
+		
+		txtXml = txtXml + "</Pelicules>"+"\n";
+		txtXml = txtXml + "</LlistaArtista>" + "\n";
+		return txtXml;
+		
+		
 	}
 
 	public String llistaVenta() {
