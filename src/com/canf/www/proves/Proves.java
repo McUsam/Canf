@@ -110,6 +110,52 @@ public class Proves {
             System.out.println("");            
             System.out.println(magatzem1.llistaArticle(TipusArticle.PELICULA, TipusExtensio.SENZILL)); //veim llistat de pelicules - llistaArticle - SENZILL
             System.out.println("");
+		
+		
+		//Disc
+//
+//               	
+//            ArrayList<String> albun1 = new ArrayList<>();
+//            albun1.add("1.Highway to hell");
+//            albun1.add("2.Welcome to the jungle");
+//            albun1.add("3.Walk All Over You");
+//
+//            Disc disc1 = new Disc("ACDC", albun1, "Trui", "Hight voltage", "Disc 20 aniversari", 12.20, 5);
+//            disc1.afegirCanso("4.Nifht Prowler");
+//            disc1.afegirCanso("5.Shot Down in Flames");
+//            disc1.esborraCanso("5.Shot Down in Flames");
+//            //Veim el contingut amb el tipus de extensio.extens que veim tot el nom del interpret, llistat de cançons, la discografica
+//            System.out.println(disc1.toXML(TipusExtensio.EXTENS));
+//            System.out.println("");
+//
+//               Disc disc2 = new Disc("Cucorba", "blau", "dudua", "Peasos", 5.5, 2);
+//            disc2.afegirCanso("1.Bon dia");
+//            disc2.afegirCanso("2.El gegant del pi");
+//            disc2.afegirCanso("3.Adéu siau");
+//            // Velm el contingut del xml amb una forma més resumida sense les cançons, ni seong que, només el més 
+//            System.out.println(disc2.toXML(TipusExtensio.SENZILL));
+//             
+//            
+//            
+//            
+//            //La quantitat demanada a la compra es superior a la del stock, per tant no deixarà comprar.
+//            LiniaFactura lf5 = new LiniaFactura(disc1, 6);
+//            LiniaFactura lf6 = new LiniaFactura(disc2, 10);
+//            
+//
+//            HashMap<Integer, LiniaFactura> venta3 = new HashMap<Integer, LiniaFactura>();
+//            venta3.put(1, lf5);
+//            venta3.put(2, lf6);
+//           
+//            
+//            
+//            Venta v3 = new Venta(venta3, "6");
+//
+////            Magatzem m1 = new Magatzem("Spain");
+//            m1.afegeixVenta(v3);
+//
+//            String llistat2 = m1.llistaVenta();
+//            System.out.println(llistat2);
 	
 	}
 	
